@@ -1,13 +1,13 @@
 package hello;
 
-public class HelloMessage {
+public class MessageToServer {
 
     private String message, channel;
 
-    public HelloMessage() {
+    public MessageToServer() {
     }
 
-    public HelloMessage(String name) {
+    public MessageToServer(String name) {
         this.message = name;
     }
 

@@ -1,4 +1,5 @@
 var stompClient = null;
+var myChannel = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -18,6 +19,7 @@ function setConnected(connected) {
 }
 
 function connect(channel) {
+    myChannel = channel;
     var socket = new SockJS('/gs-guide-websocket');
     console.log('Channel: ' + channel)
     stompClient = Stomp.over(socket);
@@ -26,10 +28,10 @@ function connect(channel) {
         //document.getElementById('titleChannel').innerHTML = 'Channel ' + channel;
         $("#titleChannel").html('Channel ' + channel);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings/' + channel, function (greeting) {
+        stompClient.subscribe('/topic/messaging/' + channel, function (greeting) {
             showGreetingChannel(JSON.parse(greeting.body).content);
         });
-        stompClient.subscribe('/topic/greetings/', function (greeting) {
+        stompClient.subscribe('/topic/messaging/', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -44,7 +46,7 @@ function disconnect() {
 }
 
 function sendMessage(mapping) {
-    stompClient.send(mapping, {}, JSON.stringify({'message': $("#message").val(), 'channel': $("#channel").val()}));
+    stompClient.send(mapping, {}, JSON.stringify({'message': $("#message").val(), 'channel': myChannel}));
 }
 
 function showGreeting(message) {
@@ -62,7 +64,8 @@ $(function () {
     });
     $( "#connect" ).click(function() { connect($("#channel").val()); });
     $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendMessage('/app/helloMe'); });
-    $( "#sendDefault" ).click(function() { sendMessage('/app/hello'); });
+    $( "#send" ).click(function() { sendMessage('/app/messageChannel'); });
+    $( "#sendDefault" ).click(function() { sendMessage('/app/message'); });
+    $( "#sendBoth" ).click(function() { sendMessage('/app/messageBoth/' + myChannel); });
 });
 
