@@ -120,7 +120,42 @@ function sendMessage(mapping) {
 ```
 Where mapping can be *'app/message'* to reach the method annotated with *@MessageMapping("/message")*
 
+## Use a *real* message broker (RabbitMQ)
+RabbitMQ is a full message broker. Go to its web page to see what it is and how it works: http://www.rabbitmq.com/
+You'll need to downlad and install it. 
 
+### Configure RabbitMQ
+Once installed you'll need to perform some configuration:
+***RABBITMQ CONFIGURATION***
+* enable management console (Rabbit web console: http://{server}:15672/)   
+```rabbitmq-plugins enable rabbitmq_management```
+* enable stomp plugin   
+```rabbitmq-plugins enable rabbitmq_stomp```
+
+### Add dependencies to pom.xml
+
+```
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-net</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.2.Final</version>
+        </dependency>
+```
+### Change the configuration class
+Use ```config.enableStompBrokerRelay("/topic");``` instead of the ```config.enableSimpleBroker("/topic");```
+
+### Queue names
+Will need also to change the name of the channels since RabbitMQ does not support character / (slash) in the names, instead
+we are going to use a . (point).
+See code in *MessageController* and in *app.js*
 
 ## Credits
 This code is based on https://github.com/spring-guides/gs-messaging-stomp-websocket from the Spring guides

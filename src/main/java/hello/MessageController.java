@@ -13,10 +13,10 @@ public class MessageController {
     @Autowired
     SimpMessagingTemplate msgTempl;
 
-    private final String destination = "/topic/messaging/";
+    private final String destination = "/topic/messaging";
 
     @MessageMapping("/message")
-    @SendTo("/topic/messaging/")
+    @SendTo("/topic/messaging")
     public MessageToClient greeting(MessageToServer message) throws Exception {
         return new MessageToClient("## " + message.getMessage() + " ##");
     }
@@ -24,11 +24,11 @@ public class MessageController {
     @MessageMapping("messageChannel")
     public void greetingOnlyMe(MessageToServer message) throws Exception{
         MessageToClient messageToClient = new MessageToClient("CC " + message.getMessage() + " CC");
-        msgTempl.convertAndSend(destination + message.getChannel(), messageToClient);
+        msgTempl.convertAndSend(destination + "." + message.getChannel(), messageToClient);
     }
 
     @MessageMapping("/messageBoth/{channel}")
-    @SendTo("/topic/messaging/{channel}")
+    @SendTo("/topic/messaging.{channel}")
     public MessageToClient greeting(MessageToServer message, @DestinationVariable String channel) throws Exception {
         String channelName = channel.toUpperCase();
         String content = channelName + "  " + message.getMessage() + "  " + channelName;

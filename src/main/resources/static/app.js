@@ -28,10 +28,10 @@ function connect(channel) {
         //document.getElementById('titleChannel').innerHTML = 'Channel ' + channel;
         $("#titleChannel").html('Channel ' + channel);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/messaging/' + channel, function (greeting) {
+        stompClient.subscribe('/topic/messaging.' + channel, function (greeting) {
             showGreetingChannel(JSON.parse(greeting.body).content);
         });
-        stompClient.subscribe('/topic/messaging/', function (greeting) {
+        stompClient.subscribe('/topic/messaging', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
