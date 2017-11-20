@@ -121,6 +121,7 @@ function sendMessage(mapping) {
 Where mapping can be *'app/message'* to reach the method annotated with *@MessageMapping("/message")*
 
 
+
 ## Credits
 This code is based on https://github.com/spring-guides/gs-messaging-stomp-websocket from the Spring guides
  https://spring.io/guides/gs/messaging-stomp-websocket/
