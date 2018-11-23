@@ -22,7 +22,7 @@ public class MessageController {
     }
 
     @MessageMapping("messageChannel")
-    public void greetingOnlyMe(MessageToServer message) throws Exception{
+    public void greetingOnlyMe(MessageToServer message) throws Exception {
         MessageToClient messageToClient = new MessageToClient("CC " + message.getMessage() + " CC");
         msgTempl.convertAndSend(destination + "." + message.getChannel(), messageToClient);
     }

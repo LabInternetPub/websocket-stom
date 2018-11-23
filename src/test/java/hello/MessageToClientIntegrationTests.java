@@ -97,8 +97,7 @@ public class MessageToClientIntegrationTests {
             if (failure.get() != null) {
                 throw new AssertionError("", failure.get());
             }
-        }
-        else {
+        } else {
             fail("Greeting not received");
         }
 

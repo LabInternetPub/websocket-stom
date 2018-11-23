@@ -62,10 +62,20 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect($("#channel").val()); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendMessage('/app/messageChannel'); });
-    $( "#sendDefault" ).click(function() { sendMessage('/app/message'); });
-    $( "#sendBoth" ).click(function() { sendMessage('/app/messageBoth/' + myChannel); });
+    $("#connect").click(function () {
+        connect($("#channel").val());
+    });
+    $("#disconnect").click(function () {
+        disconnect();
+    });
+    $("#send").click(function () {
+        sendMessage('/app/messageChannel');
+    });
+    $("#sendDefault").click(function () {
+        sendMessage('/app/message');
+    });
+    $("#sendBoth").click(function () {
+        sendMessage('/app/messageBoth/' + myChannel);
+    });
 });
 
